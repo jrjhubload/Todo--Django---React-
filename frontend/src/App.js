@@ -39,17 +39,19 @@ function App() {
 
   // Function to fetch To-Do items from the Django API
   const fetchTodos = async () => {
+    const token = localStorage.getItem('access_token'); // Or wherever you store it
     try {
-      const response = await fetch(API_BASE_URL);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      setTodos(data); // Update the state with fetched todos
+        const response = await fetch(API_BASE_URL, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Include the token
+            }
+        });
+        // ... rest of your fetch logic
     } catch (error) {
-      console.error("Error fetching todos:", error);
+        console.error("Error fetching todos:", error);
     }
-  };
+};
 
   // Function to add a new To-Do item
   const addTodo = async (e) => {

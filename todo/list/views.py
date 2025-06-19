@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions, 
 from .models import Item
 from .serializers import ItemSerializer
 
@@ -11,3 +11,4 @@ def index(request):
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all().order_by('-created_at') # Order by creation date descending
     serializer_class = ItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
